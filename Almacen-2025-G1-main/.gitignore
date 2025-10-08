@@ -19,3 +19,6 @@ media/
 
 # VS Code
 .vscode/
+
+# Local Django settings (credentials)
+# almacen/almacen/local_settings.py

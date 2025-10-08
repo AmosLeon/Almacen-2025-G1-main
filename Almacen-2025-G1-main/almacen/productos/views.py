@@ -1,12 +1,15 @@
 from django.shortcuts import render
 # importar vistas genericas
 from django.views.generic import ListView, CreateView
+from django.views.generic import DetailView, UpdateView, DeleteView
 # importar las clases
 from .models import Producto, Categoria, Proveedor
 # importar método reverse_lazy
 from django.urls import reverse_lazy
 # importar los formularios personalizados
 from .forms import CategoriaForm, ProveedorForm
+from .forms import ProductoForm
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -51,3 +54,30 @@ class ProveedorCreateView(CreateView):
     form_class = ProveedorForm
     template_name = "proveedor/proveedor-form.html"
     success_url = reverse_lazy("productos:proveedor-list")
+
+
+# Vistas CRUD para Producto
+class ProductoCreateView(CreateView):
+    model = Producto
+    form_class = ProductoForm
+    template_name = "producto/producto-form.html"
+    success_url = reverse_lazy("productos:producto-list")
+
+
+class ProductoDetailView(DetailView):
+    model = Producto
+    template_name = "producto/producto-detail.html"
+    context_object_name = "producto"
+
+
+class ProductoUpdateView(UpdateView):
+    model = Producto
+    form_class = ProductoForm
+    template_name = "producto/producto-form.html"
+    success_url = reverse_lazy("productos:producto-list")
+
+
+class ProductoDeleteView(DeleteView):
+    model = Producto
+    template_name = "producto/producto-delete.html"
+    success_url = reverse_lazy("productos:producto-list")

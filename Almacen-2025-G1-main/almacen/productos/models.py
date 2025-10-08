@@ -41,6 +41,7 @@ class Producto(models.Model): # aplicando herencia
     descripcion = models.TextField(null=True, max_length=150) # descripcion varchar(150)
     precio_compra = models.DecimalField(max_digits=12, decimal_places=2) # precio decimal(12,2) not null
     precio_venta = models.DecimalField(max_digits=12, decimal_places=2) # precio decimal(12,2) not null
+    stock = models.IntegerField(default=0)
     activo = models.BooleanField(default=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
@@ -48,4 +49,4 @@ class Producto(models.Model): # aplicando herencia
 
     # crear un metodo
     def __str__(self): # polimorfismo
-        return f"{self.nombre} - {self.stock} unidades"
+        return f"{self.nombre} - {getattr(self, 'stock', 0)} unidades"

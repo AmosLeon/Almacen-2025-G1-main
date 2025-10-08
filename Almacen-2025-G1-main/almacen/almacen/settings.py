@@ -76,17 +76,26 @@ WSGI_APPLICATION = 'almacen.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
+    # Temporarily use SQLite for local development to avoid ODBC/LocalDB issues.
     'default': {
-        'ENGINE': 'mssql',
-        'NAME': 'InventarioBD-G1',
-        'HOST': 'FRANK\\SQLEXPRESS',
-        'PORT': '1433',
-        'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',
-            'trusted_connection': 'yes'
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# Original SQL Server configuration (commented out - restore when ready):
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'mssql',
+#         'NAME': 'InventarioBD-G1',
+#         'HOST': 'FRANK\\SQLEXPRESS',
+#         'PORT': '1433',
+#         'OPTIONS': {
+#             'driver': 'ODBC Driver 18 for SQL Server',
+#             'trusted_connection': 'yes'
+#         }
+#     }
+# }
 
 
 # Password validation
@@ -134,3 +143,11 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# (No local_settings import) settings de base se mantienen en este archivo
+
+# Si existe, cargar configuraciones locales (por ejemplo para usar LocalDB sin modificar el archivo principal)
+try:
+    from .local_settings import *  # type: ignore
+except ImportError:
+    pass
